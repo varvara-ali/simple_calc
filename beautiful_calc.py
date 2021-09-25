@@ -7,13 +7,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.firstNumber = 0
-        self.intPart = "0"
-        self.floatPart = ""
-        self.operation = False
-
-
         uic.loadUi('calc.ui', self)  # Загружаем дизайн
+        self.clear()
         self.btn0.clicked.connect(self.add_digit)
         self.btn1.clicked.connect(self.add_digit)
         self.btn2.clicked.connect(self.add_digit)
@@ -38,7 +33,7 @@ class MyWidget(QMainWindow):
 
     def add_digit(self):
         if self.floatPart == '':
-           if self.intPart == '0':
+           if self.intPart == '0' or self.intPart == '':
                self.intPart = self.sender().text()
            else:
                self.intPart += self.sender().text()
@@ -48,38 +43,47 @@ class MyWidget(QMainWindow):
             self.table.display(f'{self.intPart}{self.floatPart}')
 
     def clear(self):
-        self.intPart = '0'
+        self.intPart = ''
         self.floatPart = ''
-        self.table.display(0)
+        self.firstNumber = 0
+        self.operation = False
+        self.table.display("0")
 
     def div(self):
-        self.eq()
-        self.firstNumber = float(self.intPart + self.floatPart)
+        if self.intPart != '':
+            self.calculate()
         self.operation = '/'
-        self.clear()
+
 
     def dot(self):
         if self.floatPart == '':
+            if self.intPart=='':
+                self.intPart = '0'
             self.floatPart = '.'
             self.table.display(f'{self.intPart}{self.floatPart}')
 
     def eq(self):
-        print(self.firstNumber)
         if not self.operation:
             return
-        secondNumber = float(self.intPart + self.floatPart)
+        self.calculate()
+        self.operation = False
 
+    def calculate(self):
+        secondNumber = float(self.intPart + self.floatPart)
         if self.operation == '/':
             if secondNumber == 0:
                 self.table.display('ERR')
                 return
             result = self.firstNumber / secondNumber
-        print(secondNumber)
-        print(result)
+        if not self.operation:
+            result = secondNumber
+
+
         self.table.display(result)
         self.firstNumber = result
-        self.intPart = '0'
+        self.intPart = ''
         self.floatPart = ''
+
 
 
     def fact(self):
