@@ -51,7 +51,7 @@ class MyWidget(QMainWindow):
 
     def div(self):
         if self.intPart != '':
-            self.calculate()
+            self.calculate()c
         self.operation = '/'
 
 
