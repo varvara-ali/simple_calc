@@ -82,8 +82,6 @@ class MyWidget(QMainWindow):
         self.floatPart = ''
 
 
-
-
     def fact(self):
         pass
 
