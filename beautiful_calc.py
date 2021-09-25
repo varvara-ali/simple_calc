@@ -51,7 +51,7 @@ class MyWidget(QMainWindow):
 
     def div(self):
         if self.intPart != '':
-            self.calculate()c
+            self.calculate()
         self.operation = '/'
 
 
@@ -75,6 +75,8 @@ class MyWidget(QMainWindow):
                 self.table.display('ERR')
                 return
             result = self.firstNumber / secondNumber
+        if self.operation == '+':
+            result = self.firstNumber + secondNumber
         if not self.operation:
             result = secondNumber
 
@@ -96,7 +98,9 @@ class MyWidget(QMainWindow):
         pass
 
     def plus(self):
-        pass
+        if self.intPart != '':
+            self.calculate()
+        self.operation = '+'
 
     def pow(self):
         pass
