@@ -77,6 +77,8 @@ class MyWidget(QMainWindow):
             result = self.firstNumber / secondNumber
         if self.operation == '+':
             result = self.firstNumber + secondNumber
+        if self.operation == '*':
+            result = self.firstNumber * secondNumber
         if not self.operation:
             result = secondNumber
 
@@ -95,7 +97,9 @@ class MyWidget(QMainWindow):
         pass
 
     def mult(self):
-        pass
+        if self.intPart != '':
+            self.calculate()
+        self.operation = '*'
 
     def plus(self):
         if self.intPart != '':
